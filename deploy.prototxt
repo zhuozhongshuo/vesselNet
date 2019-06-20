@@ -1,0 +1,594 @@
+input: "data"
+input_shape {
+  dim: 1
+  dim: 1
+  dim: 584
+  dim: 565
+}
+layer {
+  name: "Conv_bone"
+  type: "Convolution"
+  bottom: "data"
+  top: "conv_bone"
+  convolution_param {
+    num_output: 24
+    bias_term: false
+    pad: 4
+    kernel_size: 9
+    stride: 1
+    weight_filler {
+      type: "msra"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+layer {
+  name: "relu_bone"
+  type: "ReLU"
+  bottom: "conv_bone"
+  top: "conv_bone"
+}
+layer {
+  name: "pool_bone"
+  type: "Pooling"
+  bottom:  "conv_bone"
+  top: "pool_bone"
+  pooling_param {
+    pool: MAX
+    kernel_size: 3
+    stride: 1
+    pad: 1
+  }
+}
+layer {
+  name: "Convolution1"
+  type: "Convolution"
+  bottom: "pool_bone"
+  top: "Convolution1"
+  convolution_param {
+    num_output: 12
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+    weight_filler {
+      type: "msra"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+
+layer {
+  name: "relu1"
+  type: "ReLU"
+  bottom: "Convolution1"
+  top: "Convolution1"
+}
+
+layer {
+  name: "pool1"
+  type: "Pooling"
+  bottom: "Convolution1"
+  top: "pool1"
+  pooling_param {
+    pool: MAX
+    kernel_size: 3
+    stride: 1
+    pad: 1
+  }
+}
+layer {
+  name: "Concat1"
+  type: "Concat"
+  bottom: "pool_bone"
+  bottom: "pool1"
+  top: "Concat1"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "Convolution2"
+  type: "Convolution"
+  bottom: "Concat1"
+  top: "Convolution2"
+  convolution_param {
+    num_output: 12
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+    weight_filler {
+      type: "msra"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+
+layer {
+  name: "relu2"
+  type: "ReLU"
+  bottom: "Convolution2"
+  top: "Convolution2"
+}
+layer {
+  name: "pool2"
+  type: "Pooling"
+  bottom: "Convolution2"
+  top: "pool2"
+  pooling_param {
+    pool: MAX
+    kernel_size: 3
+    stride: 1
+    pad: 1
+  }
+}
+layer {
+  name: "Concat2"
+  type: "Concat"
+  bottom: "Concat1"
+  bottom: "pool2"
+  top: "Concat2"
+  concat_param {
+    axis: 1
+  }
+}
+
+
+
+layer {
+  name: "bottleneck_1"
+  type: "Convolution"
+  bottom: "Concat2"
+  top: "bottleneck_1"
+  convolution_param {
+    num_output: 36
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+    weight_filler {
+      type: "msra"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+
+layer {
+  name: "relu_btn_1"
+  type: "ReLU"
+  bottom:"bottleneck_1"
+  top:"bottleneck_1"
+}
+layer {
+  name: "pool9_btn_1"
+  type: "Pooling"
+  bottom:"bottleneck_1"
+  top: "pool9_btn_1"
+  pooling_param {
+    pool: MAX
+    kernel_size: 3
+    stride: 1
+    pad: 1
+  }
+}
+layer {
+  name: "Convolution4"
+  type: "Convolution"
+  bottom: "pool9_btn_1"
+  top: "Convolution4"
+  convolution_param {
+    num_output: 12
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+    weight_filler {
+      type: "msra"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+
+layer {
+  name: "relu4"
+  type: "ReLU"
+  bottom:"Convolution4"
+  top:"Convolution4"
+}
+layer {
+  name: "pool4"
+  type: "Pooling"
+  bottom:"Convolution4"
+  top: "pool4"
+  pooling_param {
+    pool: MAX
+    kernel_size: 3
+    stride: 1
+    pad: 1
+  }
+}
+layer {
+  name: "Concat4"
+  type: "Concat"
+  bottom: "pool9_btn_1"
+  bottom: "pool4"
+  top: "Concat4"
+  concat_param {
+    axis: 1
+  }
+}
+
+layer {
+  name: "Convolution5"
+  type: "Convolution"
+  bottom: "Concat4"
+  top: "Convolution5"
+  convolution_param {
+    num_output: 12
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+    weight_filler {
+      type: "msra"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+
+layer {
+  name: "relu5"
+  type: "ReLU"
+  bottom:"Convolution5"
+  top:"Convolution5"
+}
+layer {
+  name: "pool5"
+  type: "Pooling"
+  bottom:"Convolution5"
+  top: "pool5"
+  pooling_param {
+    pool: MAX
+    kernel_size: 3
+    stride: 1
+    pad: 1
+  }
+}
+layer {
+  name: "Concat5"
+  type: "Concat"
+  bottom: "Concat4"
+  bottom: "pool5"
+  top: "Concat5"
+  concat_param {
+    axis: 1
+  }
+}
+
+layer {
+  name: "Convolution6"
+  type: "Convolution"
+  bottom: "Concat5"
+  top: "Convolution6"
+  convolution_param {
+    num_output: 12
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+    weight_filler {
+      type: "msra"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+
+layer {
+  name: "relu6"
+  type: "ReLU"
+  bottom:"Convolution6"
+  top:"Convolution6"
+}
+layer {
+  name: "pool6"
+  type: "Pooling"
+  bottom:"Convolution6"
+  top: "pool6"
+  pooling_param {
+    pool: MAX
+    kernel_size: 3
+    stride: 1
+    pad: 1
+  }
+}
+layer {
+  name: "Concat6"
+  type: "Concat"
+  bottom: "Concat5"
+  bottom: "pool6"
+  top: "Concat6"
+  concat_param {
+    axis: 1
+  }
+}
+
+layer {
+  name: "bottleneck_2"
+  type: "Convolution"
+  bottom: "Concat6"
+  top: "bottleneck_2"
+  convolution_param {
+    num_output: 48
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+    weight_filler {
+      type: "msra"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+
+layer {
+  name: "relu_btn_2"
+  type: "ReLU"
+  bottom:"bottleneck_2"
+  top:"bottleneck_2"
+}
+layer {
+  name: "pool9_btn_2"
+  type: "Pooling"
+  bottom:"bottleneck_2"
+  top: "pool9_btn_2"
+  pooling_param {
+    pool: MAX
+    kernel_size: 3
+    stride: 1
+    pad: 1
+  }
+}
+
+layer {
+  name: "Convolution7"
+  type: "Convolution"
+  bottom: "pool9_btn_2"
+  top: "Convolution7"
+  convolution_param {
+    num_output: 12
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+    weight_filler {
+      type: "msra"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+
+layer {
+  name: "relu7"
+  type: "ReLU"
+  bottom:"Convolution7"
+  top:"Convolution7"
+}
+layer {
+  name: "pool7"
+  type: "Pooling"
+  bottom:"Convolution7"
+  top: "pool7"
+  pooling_param {
+    pool: MAX
+    kernel_size: 3
+    stride: 1
+    pad: 1
+  }
+}
+layer {
+  name: "Concat7"
+  type: "Concat"
+  bottom:"pool9_btn_2"
+  bottom: "pool7"
+  top: "Concat7"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "Convolution8"
+  type: "Convolution"
+  bottom: "Concat7"
+  top: "Convolution8"
+  convolution_param {
+    num_output: 12
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+    weight_filler {
+      type: "msra"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+
+layer {
+  name: "relu8"
+  type: "ReLU"
+  bottom:"Convolution8"
+  top:"Convolution8"
+}
+layer {
+  name: "pool8"
+  type: "Pooling"
+  bottom:"Convolution8"
+  top: "pool8"
+  pooling_param {
+    pool: MAX
+    kernel_size: 3
+    stride: 1
+    pad: 1
+  }
+}
+layer {
+  name: "Concat8"
+  type: "Concat"
+  bottom: "Concat7"
+  bottom: "pool8"
+  top: "Concat8"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "Convolution9"
+  type: "Convolution"
+  bottom: "Concat8"
+  top: "Convolution9"
+  convolution_param {
+    num_output: 12
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+    weight_filler {
+      type: "msra"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+
+layer {
+  name: "relu9"
+  type: "ReLU"
+  bottom:"Convolution9"
+  top:"Convolution9"
+}
+layer {
+  name: "pool9"
+  type: "Pooling"
+  bottom:"Convolution9"
+  top: "pool9"
+  pooling_param {
+    pool: MAX
+    kernel_size: 3
+    stride: 1
+    pad: 1
+  }
+}
+layer {
+  name: "Concat9"
+  type: "Concat"
+  bottom: "Concat8"
+  bottom: "pool9"
+  top: "Concat9"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "Convolution10"
+  type: "Convolution"
+  bottom: "Concat9"
+  top: "Convolution10"
+  convolution_param {
+    num_output: 12
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+    weight_filler {
+      type: "msra"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+
+layer {
+  name: "relu10"
+  type: "ReLU"
+  bottom:"Convolution10"
+  top:"Convolution10"
+}
+layer {
+  name: "pool10"
+  type: "Pooling"
+  bottom:"Convolution10"
+  top: "pool10"
+  pooling_param {
+    pool: MAX
+    kernel_size: 3
+    stride: 1
+    pad: 1
+  }
+}
+layer {
+  name: "Concat10"
+  type: "Concat"
+  bottom: "Concat9"
+  bottom: "pool10"
+  top: "Concat10"
+  concat_param {
+    axis: 1
+  }
+}
+####################融合层
+layer {
+  name: "conv_end"
+  type: "Convolution"
+  bottom: "Concat10"
+  top: "conv_end"
+  param {
+    lr_mult: 1.0
+  }
+  param {
+    lr_mult: 0.10000000149
+  }
+  convolution_param {
+    num_output: 1
+    pad: 2
+    kernel_size: 5
+    stride: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.0010000000475
+    }
+    bias_filler {
+      type: "constant"
+      value: 0.0
+    }
+  }
+}
+layer {
+  name: "sigmoid_3"
+  bottom: "conv_end"
+  top: "conv_end"
+  type: "Sigmoid"
+}
+

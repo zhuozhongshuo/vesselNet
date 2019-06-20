@@ -1,0 +1,15 @@
+test_iter: 144
+test_interval: 142
+base_lr: 0.0007
+display: 1782
+max_iter: 120000
+lr_policy: "step"
+gamma: 0.10000000149
+momentum: 0.899999976158
+weight_decay: 6.99999964127e-06
+stepsize: 40000
+snapshot: 20000
+snapshot_prefix: "/home/ly/caffe/RVS/densenet/1st_test/2-3-4/1st_test-sigmoid/snapshot"
+solver_mode: GPU
+net: "/home/ly/caffe/RVS/densenet/1st_test/2-3-4/1st_test-sigmoid/1st_train_val.prototxt"
+solver_type: ADAM
